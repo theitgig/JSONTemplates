@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  //
+  // Parameters
+  "parameters": {},
+  //
+  // Variables
+  "variables": {
+    "CoreVNETPrefix": "10.0.16.0/20",
+    "CoreVNETSubnet1Name": "Subnet-1",
+    "CoreVNETSubnet1Prefix": "10.0.16.0/24",
+    "CoreVNETSubnet2Name": "Subnet-2",
+    "CoreVNETSubnet2Prefix": "10.0.17.0/24",
+    // New Subnet
+    // "<CoreVNETSubnetxName>": "Subnet-x",
+    // "<CoreVNETSubnetxPrefix>": "10.0.x.0/24"
+  },
+  //
+  // Resources
+  "resources": [
+    {
+      "name": "CoreVNET",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-03-30",
+      "dependsOn": [],
+      "tags": {
+        "displayName": "CoreVNET"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('CoreVNETPrefix')]"
+          ]
+        },
+        // start of subnets
+        "subnets": [
+          // Subnet 1
+          {
+            "name": "[variables('CoreVNETSubnet1Name')]",
+            "properties": {
+              "addressPrefix": "[variables('CoreVNETSubnet1Prefix')]"
+            }
+          },
+          // Subnet 2
+          {
+            "name": "[variables('CoreVNETSubnet2Name')]",
+            "properties": {
+              "addressPrefix": "[variables('CoreVNETSubnet2Prefix')]"
+            }
+          }
+          //
+        ] // End of subnets
+      }
+    }
+  ],
+  "outputs": {}
+}
